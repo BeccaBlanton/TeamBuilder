@@ -10,6 +10,59 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+const engineerPrompt = {
+    type: 'input',
+    name: 'github',
+    message: 'what is your github username?'
+};
+
+const internPrompt = {
+    type: 'input',
+    name: 'school',
+    message: 'What school do you go to?'
+};
+
+const managerPrompt = {
+    type: 'input',
+    name: 'officeNumber',
+    message: 'What is your Office Number?'
+}
+
+function employeeQuestons(){
+inquirer.prompt([
+    {
+        type: 'input',
+       message: "What's your name?",
+       name: 'name',
+    },
+    {
+        type: 'input',
+       message: "What's your work Id?",
+       name: 'id',
+    },
+    {
+        type: 'input',
+       message: "What's your email?",
+       name: 'email',
+    },
+    {
+    type: 'list',
+    name: 'jobtitle',
+    message: 'Whats your job title?',
+    choices: ['Engineer', 'Intern', 'Manager']
+}
+]).then((answers) =>{
+    if (answers.jobtitle === 'Engineer'){
+        inquirer.prompt(engineerPrompt);
+    } else if(answers.jobtitle === 'Intern'){
+       inquirer.prompt(internPrompt);
+    } else {
+        inquirer.prompt(managerPrompt);
+    }
+    
+})
+}
+employeeQuestons()
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
@@ -32,4 +85,4 @@ const render = require("./lib/htmlRenderer");
 // and Intern classes should all extend from a class named Employee; see the directions
 // for further information. Be sure to test out each class and verify it generates an
 // object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
+// for the provided `render` function to work!
