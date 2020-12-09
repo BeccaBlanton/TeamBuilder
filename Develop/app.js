@@ -5,10 +5,13 @@ const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
 
+
+
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
+const template = require("./lib/htmlRenderer");
 //array to put in all user inputted emplyee objects
 const employees = []
 //first 4 questions using inquirer to get emplyee info
@@ -94,16 +97,16 @@ function moreEmployees(employees){
             employeeQuestions(); 
          }else{
           render(employees)
-
+            makeFile(html)
          }
     })
     
 }
 //function to make a final html file that will go into output folder
-//function makeFile(){
-    //fs.writeFile(outputPath, html, (err) => err ? console.log(err) : console.log('yay'))
+function makeFile(html){
+    fs.writeFile(outputPath, html, (err) => err ? console.log(err) : console.log('yay'))
 
-   // }
+    }
 
 
 employeeQuestions()
