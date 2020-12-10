@@ -15,39 +15,61 @@ const html = require("./lib/htmlRenderer");
 //array to put in all user inputted emplyee objects
 const employees = []
 //first 4 questions using inquirer to get emplyee info
-const initialPrompts = [
+const initialPrompts=[
+{
+    type:'input',
+    name:'managerName',
+    message: "Welcome Manager to Team Builder. First off, whats your name?"
+
+},
+{
+    type: 'input',
+   message: "What's your work Id?",
+   name: 'id',
+},
+{
+    type: 'input',
+   message: "What's your email?",
+   name: 'email',
+},
+{
+    type: 'input',
+    name: 'officeNumber',
+    message: 'What is your Office Number?'
+}]
+const employeePrompts = [
     {
         type: 'input',
-       message: "What's your name?",
+       message: "What's your employee's name?",
        name: 'name',
     },
     {
         type: 'input',
-       message: "What's your work Id?",
+       message: "What's is their work Id?",
        name: 'id',
     },
     {
         type: 'input',
-       message: "What's your email?",
+       message: "What's your employee's email?",
        name: 'email',
     },
     {
     type: 'list',
     name: 'jobtitle',
-    message: 'Whats your job title?',
-    choices: ['Engineer', 'Intern', 'Manager']
+    message: 'What is their job title?',
+    choices: ['Engineer', 'Intern']
 }]
 //job type specific questions based on job title listed
 const engineerPrompt = {
     type: 'input',
     name: 'github',
-    message: 'what is your github username?'
+    message: "what is your engineer's github username?"
 };
 
 const internPrompt = {
     type: 'input',
     name: 'school',
-    message: 'What school do you go to?'
+    message: 'What school does your intern go to?'
 };
 
 const managerPrompt = {
@@ -55,10 +77,17 @@ const managerPrompt = {
     name: 'officeNumber',
     message: 'What is your Office Number?'
 }
-
+function managerQuestion(){
+    inquirer.prompt(initialPrompts).then(function(answers){
+        let employee = new Manager(answers.managerName, answers.id, answers.email, answers.officeNumber)
+            employees.push(employee)
+            console.log(employees)
+            moreEmployees(employees);
+    })
+}
 //function to ask questions and create emplyee objects, then pushed into employees array
 function employeeQuestions(){
-inquirer.prompt(initialPrompts).then(function(answers) {
+inquirer.prompt(employeePrompts).then(function(answers) {
     if (answers.jobtitle === 'Engineer'){
         inquirer.prompt(engineerPrompt).then((answers2)=>{
            let employee = new Engineer(answers.name, answers.id, answers.email, answers2.github)
@@ -74,13 +103,6 @@ inquirer.prompt(initialPrompts).then(function(answers) {
            console.log(employees)
         moreEmployees(employees);
     })
-    } else {
-        inquirer.prompt(managerPrompt).then((answers2)=>{
-            let employee = new Manager(answers.name, answers.id, answers.email, answers2.officeNumber)
-            employees.push(employee)
-            console.log(employees)
-            moreEmployees(employees);
-        })
     }
    
 })
@@ -96,19 +118,13 @@ function moreEmployees(employees){
         if(answers.continue){
             employeeQuestions(); 
          }else{
-          fs.writeFile(outputPath, render(employees), (err) => err ? console.log(err) : console.log('yay'))
+          fs.writeFile(outputPath, render(employees), (err) => err ? console.log("sorry there was an error!") : console.log("Yay, Your team.html page is ready in the Output folder. Enjoy!"))
          }
     })
     
 }
-//function to make a final html file that will go into output folder
-function makeFile(html){
-    fs.writeFile(outputPath, html, (err) => err ? console.log(err) : console.log('yay'))
 
-    }
-
-
-employeeQuestions()
+managerQuestion()
 
 
 //√ Write code to use inquirer to gather information about the development team members,
