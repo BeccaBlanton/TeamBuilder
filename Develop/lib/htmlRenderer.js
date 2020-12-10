@@ -19,6 +19,8 @@ const render = employees => {
     .map(intern => renderIntern(intern))
   );
 
+  console.log(html)
+
   return renderMain(html.join(""));
 
 };
@@ -30,6 +32,7 @@ const renderManager = manager => {
   template = replacePlaceholders(template, "email", manager.getEmail());
   template = replacePlaceholders(template, "id", manager.getId());
   template = replacePlaceholders(template, "officeNumber", manager.getOfficeNumber());
+  console.log(template)
   return template;
 };
 
@@ -62,5 +65,6 @@ const replacePlaceholders = (template, placeholder, value) => {
   const pattern = new RegExp("{{ " + placeholder + " }}", "gm");
   return template.replace(pattern, value);
 };
+
 
 module.exports = render;

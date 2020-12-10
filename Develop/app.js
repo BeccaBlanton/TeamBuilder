@@ -11,7 +11,7 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
-const template = require("./lib/htmlRenderer");
+const html = require("./lib/htmlRenderer");
 //array to put in all user inputted emplyee objects
 const employees = []
 //first 4 questions using inquirer to get emplyee info
@@ -60,23 +60,23 @@ const managerPrompt = {
 function employeeQuestions(){
 inquirer.prompt(initialPrompts).then(function(answers) {
     if (answers.jobtitle === 'Engineer'){
-        inquirer.prompt(engineerPrompt).then(()=>{
-           let employee = new Engineer(answers.name, answers.id, answers.email, answers.github)
+        inquirer.prompt(engineerPrompt).then((answers2)=>{
+           let employee = new Engineer(answers.name, answers.id, answers.email, answers2.github)
             employees.push(employee)
             console.log(employees)
             moreEmployees(employees);
         })
         
     } else if(answers.jobtitle === 'Intern'){
-       inquirer.prompt(internPrompt).then(()=>{
-           let employee = new Intern(answers.name, answers.id, answers.email, answers.school)
+       inquirer.prompt(internPrompt).then((answers2)=>{
+           let employee = new Intern(answers.name, answers.id, answers.email, answers2.school)
            employees.push(employee)
            console.log(employees)
         moreEmployees(employees);
     })
     } else {
-        inquirer.prompt(managerPrompt).then(()=>{
-            let employee = new Manager(answers.name, answers.id, answers.email, answers.officeNumber)
+        inquirer.prompt(managerPrompt).then((answers2)=>{
+            let employee = new Manager(answers.name, answers.id, answers.email, answers2.officeNumber)
             employees.push(employee)
             console.log(employees)
             moreEmployees(employees);
@@ -96,8 +96,7 @@ function moreEmployees(employees){
         if(answers.continue){
             employeeQuestions(); 
          }else{
-          render(employees)
-            makeFile(html)
+          fs.writeFile(outputPath, render(employees), (err) => err ? console.log(err) : console.log('yay'))
          }
     })
     
