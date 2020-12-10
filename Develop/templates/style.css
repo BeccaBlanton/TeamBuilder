@@ -1,0 +1,36 @@
+body{
+background-color: #2C3531;
+color: #D1E8E2
+}
+
+.jumbotron{
+background-color:#116466 ;
+border-bottom-color: #D1E8E2;
+border-bottom-width: 1rem;
+border-bottom-style: groove;
+
+}
+h1{
+font-size: 100px;
+}
+.card{
+    margin: 10px;
+}
+
+.card-header{
+    background-color: #116466;
+    
+}
+.card-body{
+    background-color: #D1E8E2;
+}
+.list-group-item{
+    background-color: #254E58
+
+}
+.fas{
+    color: #D8C3A5;
+}
+a{
+    color: #88BDBC
+}
