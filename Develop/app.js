@@ -12,71 +12,104 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 const html = require("./lib/htmlRenderer");
-//array to put in all user inputted emplyee objects
+//array to put in all user inputted employee objects
 const employees = []
-//first 4 questions using inquirer to get emplyee info
+//first 4 questions to manager using inquirer to get manager info
 const initialPrompts=[
 {
     type:'input',
     name:'managerName',
-    message: "Welcome Manager to Team Builder. First off, whats your name?"
-
+    message: "Welcome Manager to Team Builder. First off, whats your name?",
+    validate: function validateName(name){
+        var reg = /^[a-zA-Z]+$/;
+        return reg.test(name) || "Please enter a valid name"
+    }
 },
 {
     type: 'input',
    message: "What's your work Id?",
    name: 'id',
+   validate: function validateID(ID){
+   var reg = /^\d+$/;
+   return reg.test(ID) || "Please enter a valid number";
+}
 },
 {
     type: 'input',
    message: "What's your email?",
    name: 'email',
+   validate: function (email) {
+    var reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return reg.test(email) || "Please enter a valid email";
+}
 },
 {
     type: 'input',
     name: 'officeNumber',
-    message: 'What is your Office Number?'
+    message: 'What is your Office Number?',
+    validate: function validateNum(num){
+        var reg = /^\d+$/;
+        return reg.test(num) || "Please enter a valid number";
+     }
 }]
+//prompts for additional team members.
 const employeePrompts = [
     {
-        type: 'input',
-       message: "What's your employee's name?",
-       name: 'name',
+    type: 'input',
+    message: "What's your employee's name?",
+    name: 'name',
+    validate: function validateName(name){
+        var reg = /^[a-zA-Z]+$/;
+        return reg.test(name) || "Please enter a valid name"
+    }
     },
     {
-        type: 'input',
-       message: "What's is their work Id?",
-       name: 'id',
+    type: 'input',
+    message: "What's is their work Id?",
+    name: 'id',
+    validate: function validateID(ID){
+        var reg = /^\d+$/;
+        return reg.test(ID) || "Please enter a valid number";
+     }
+
     },
     {
-        type: 'input',
-       message: "What's your employee's email?",
-       name: 'email',
-    },
+    type: 'input',
+    message: "What's your employee's email?",
+    name: 'email',
+    validate: function (email) {
+        var reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        return reg.test(email) || "Please enter a valid email";
+    }},
     {
     type: 'list',
     name: 'jobtitle',
     message: 'What is their job title?',
     choices: ['Engineer', 'Intern']
 }]
+
 //job type specific questions based on job title listed
 const engineerPrompt = {
     type: 'input',
     name: 'github',
-    message: "what is your engineer's github username?"
+    message: "what is your engineer's github username?",
+    validate: function validateName(name){
+        var reg = /^[a-zA-Z0-9]+$/;
+        return reg.test(name) || "Please enter a valid username"
+    }
+
 };
 
 const internPrompt = {
     type: 'input',
     name: 'school',
-    message: 'What school does your intern go to?'
+    message: 'What school does your intern go to?',
+    validate: function validateName(name){
+        var reg = /^[a-zA-Z]+$/;
+        return reg.test(name) || "Please enter a valid School name"
+    }
 };
 
-const managerPrompt = {
-    type: 'input',
-    name: 'officeNumber',
-    message: 'What is your Office Number?'
-}
 function managerQuestion(){
     inquirer.prompt(initialPrompts).then(function(answers){
         let employee = new Manager(answers.managerName, answers.id, answers.email, answers.officeNumber)
