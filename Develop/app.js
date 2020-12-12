@@ -105,7 +105,7 @@ const internPrompt = {
     name: 'school',
     message: 'What school does your intern go to?',
     validate: function validateName(name){
-        var reg = /^[a-zA-Z]+$/;
+        var reg = /^[a-zA-Z ]+$/;
         return reg.test(name) || "Please enter a valid School name"
     }
 };
