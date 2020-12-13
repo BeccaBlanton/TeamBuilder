@@ -21,7 +21,7 @@ const initialPrompts=[
     name:'managerName',
     message: "Welcome Manager to Team Builder. First off, whats your name?",
     validate: function validateName(name){
-        var reg = /^[a-zA-Z]+$/;
+        var reg = /^[a-zA-Z ]+$/;
         return reg.test(name) || "Please enter a valid name"
     }
 },

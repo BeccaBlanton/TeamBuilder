@@ -26,7 +26,7 @@ You can use this html file and attached style sheet to use as an easy way to dis
 ### Sample of Page generated with app.
 ![sample html of team.html created with app](./Develop/lib/sameteamhtmlpage.png)
 
-[Link to video walkthrough](https://drive.google.com/file/d/1ON2husCN4CGTJpYFSLJoaKpUAfYlXEkC/view)
+[Link to video walkthrough](https://drive.google.com/file/d/14gP4nW0GVnwU0pxgJLznYm5HZbtTISA7/view)
 
 ### license
 
